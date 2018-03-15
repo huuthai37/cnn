@@ -14,9 +14,9 @@ if sys.argv[3] == 'aug':
 else:
     gen_aug = False
 
-data_folder = r'~/thainh/data/rgb/{}/'.format(train)
-text_file = r'~/thainh/ucfTrainTestlist/{}list01.txt'.format(train)
-data_video_folder = '~/thainh/UCF-101/'
+data_folder = r'/home/oanhnt/thainh/data/rgb/{}/'.format(train)
+text_file = r'/home/oanhnt/thainh/ucfTrainTestlist/{}list01.txt'.format(train)
+data_video_folder = '/home/oanhnt/thainh/UCF-101/'
 
 with open(text_file) as f:
     for line in f:
