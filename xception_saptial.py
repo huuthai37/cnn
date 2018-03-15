@@ -13,8 +13,8 @@ if sys.argv[1] == 'train':
 else:
     train = False
 
-train_path = 'home/oanhnt/thainh/data/rgb/train'
-test_path = 'home/oanhnt/thainh/data/rgb/test'
+train_path = '/home/oanhnt/thainh/data/rgb/train'
+test_path = '/home/oanhnt/thainh/data/rgb/test'
 epochs = int(sys.argv[3])
 batch_size = int(sys.argv[2])
 classes = int(sys.argv[4])
