@@ -58,10 +58,12 @@ x = Dense(classes, activation='softmax', name='predictions')(model.layers[-2].ou
 #Then create the corresponding model 
 my_model = Model(input=model.input, output=x)
 # my_model.summary()
-
+metrics = ['accuracy']
+if classes >= 10:
+    metrics.append('top_k_categorical_accuracy')
 my_model.compile(loss='mean_squared_error',
-              optimizer=optimizers.SGD(lr=1e-3, momentum=0.9),
-              metrics=['accuracy'])
+              optimizer=optimizers.SGD(lr=0.1, momentum=0.9),
+              metrics=metrics)
 
 if train:
     my_model.fit_generator(
