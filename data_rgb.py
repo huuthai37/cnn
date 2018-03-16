@@ -30,7 +30,7 @@ with open(text_file) as f:
         if train == 'train':
             arr_line = line.split(' ')[0]
         else:
-            arr_line = line.split('\n')[0]
+            arr_line = line.rstrip()
         path_video = arr_line.split('/')
         num_name = len(path_video)
         name_video = path_video[num_name - 1].split('.')[0]
