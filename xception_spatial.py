@@ -61,7 +61,7 @@ my_model = Model(input=model.input, output=x)
 metrics = ['accuracy']
 if classes >= 10:
     metrics.append('top_k_categorical_accuracy')
-my_model.compile(loss='mean_squared_error',
+my_model.compile(loss='categorical_crossentropy',
               optimizer=optimizers.SGD(lr=0.1, momentum=0.9),
               metrics=metrics)
 
