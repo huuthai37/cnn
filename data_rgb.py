@@ -20,9 +20,9 @@ data_video_folder = '/home/oanhnt/thainh/UCF-101/'
 
 def crop_image(frame, name_video, i, y, x):
     crop = frame[y:y+224, x:x+224].copy()
-    cv2.imwrite(r'{}-{}-{}{}.png'.format(name_video, i, y, x), crop)
+    cv2.imwrite(r'{}-{}-{}{}.jpg'.format(name_video, i, y, x), crop)
     crop_flip = cv2.flip(crop, 1)
-    cv2.imwrite(r'{}-{}-{}{}-flh.png'.format(name_video, i, y, x), crop_flip)
+    cv2.imwrite(r'{}-{}-{}{}-flh.jpg'.format(name_video, i, y, x), crop_flip)
 
 with open(text_file) as f:
     for line in f:
