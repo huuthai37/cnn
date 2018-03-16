@@ -84,9 +84,10 @@ if train:
     my_model.save_weights('xception_spatial_{}e.h5'.format(epochs + old_epochs))
 else:
     my_model.load_weights('xception_spatial_{}e.h5'.format(epochs))
-    score = my_model.evaluate_generator(test_batches, verbose=1)
+    score = my_model.evaluate_generator(test_batches)
+    print score
     # with open('spatial_result.txt', 'a') as the_file:
     #     the_file.write('Test loss:', score[0])
     #     the_file.write('Test accuracy:', score[1])
-    print('Test loss:', score[0])
-    print('Test accuracy:', score[1])
+    # print('Test loss:', score[0])
+    # print('Test accuracy:', score[1])
