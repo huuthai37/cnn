@@ -7,11 +7,19 @@ from keras.layers import Dense, Conv2D, Activation, Reshape, Flatten
 from keras import optimizers
 # from xception import XceptionFix
 
-# xception_spatical.py train 32 1 101
+# train: xception_spatical.py train 32 1 101
+# test: xception_spatical.py test 32 1 101
+# retrain: xception_spatical.py retrain 32 1 101 1
 if sys.argv[1] == 'train':
     train = True
+    retrain = False
+elif sys.argv[1] == 'retrain':
+    train = True
+    retrain = True
+    old_epochs = int(sys.argv[5])
 else:
     train = False
+    retrain = False
 
 train_path = '/home/oanhnt/thainh/data/rgb/train'
 test_path = '/home/oanhnt/thainh/data/rgb/test'
@@ -66,12 +74,14 @@ my_model.compile(loss='categorical_crossentropy',
               metrics=metrics)
 
 if train:
+    if retrain:
+        my_model.load_weights('xception_spatial_{}e.h5'.format(old_epochs))
     my_model.fit_generator(
         train_batches,
         epochs=epochs,
         verbose=1
     )
-    my_model.save_weights('xception_spatial_{}e.h5'.format(epochs))
+    my_model.save_weights('xception_spatial_{}e.h5'.format(epochs + old_epochs))
 else:
     my_model.load_weights('xception_spatial_{}e.h5'.format(epochs))
     score = my_model.evaluate_generator(test_batches, verbose=1)
