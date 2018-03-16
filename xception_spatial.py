@@ -7,9 +7,9 @@ from keras.layers import Dense, Conv2D, Activation, Reshape, Flatten
 from keras import optimizers
 # from xception import XceptionFix
 
-# train: xception_spatical.py train 32 1 101
-# test: xception_spatical.py test 32 1 101
-# retrain: xception_spatical.py retrain 32 1 101 1
+# train: xception_spatial.py train 32 1 101
+# test: xception_spatial.py test 32 1 101
+# retrain: xception_spatial.py retrain 32 1 101 1
 if sys.argv[1] == 'train':
     train = True
     retrain = False
