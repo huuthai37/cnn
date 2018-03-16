@@ -66,11 +66,11 @@ with open(text_file) as f:
 
                 cv2.imwrite(r'{}-{}.png'.format(name_video, i),crop)
                 
-                if not gen_aug:
-                    crop_flip = crop.copy()
-                    crop_flip = cv2.flip(crop_flip, 1)
-                    cv2.imwrite(r'{}-{}-flip.png'.format(name_video, i),crop_flip)
-                else:
+                crop_flip = crop.copy()
+                crop_flip = cv2.flip(crop_flip, 1)
+                cv2.imwrite(r'{}-{}-flip.png'.format(name_video, i),crop_flip)
+                
+                if gen_aug:
                     #make augmentation data image
                     for k in range(1, aug_size + 1):
                         flip = random.randint(0,1)
@@ -89,12 +89,13 @@ with open(text_file) as f:
                         ))
                         cv2.imwrite(r'{}-{}-{}.png'.format(name_video, i, k),crop_flip)
             else:
-                # crop center and 4 corners + flip => 10 images
-                crop_image(frame, name_video, i, 0, 0)
+                # crop center and 4 corners + flip => 10 images 
                 crop_image(frame, name_video, i, 8, 48)
-                crop_image(frame, name_video, i, 16, 96)
-                crop_image(frame, name_video, i, 16, 0)
-                crop_image(frame, name_video, i, 0, 96)
+                if gen_aug:
+                    crop_image(frame, name_video, i, 0, 0)
+                    crop_image(frame, name_video, i, 16, 96)
+                    crop_image(frame, name_video, i, 16, 0)
+                    crop_image(frame, name_video, i, 0, 96)
 
         print name_video
 
