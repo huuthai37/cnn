@@ -18,10 +18,19 @@ data_folder = r'/home/oanhnt/thainh/data/rgb/{}/'.format(train)
 text_file = r'/home/oanhnt/thainh/ucfTrainTestlist/{}list01.txt'.format(train)
 data_video_folder = '/home/oanhnt/thainh/UCF-101/'
 
+def crop_image(frame, name_video, i, y, x):
+    crop = frame[y:y+224, x:x+224].copy()
+    cv2.imwrite(r'{}-{}-{}{}.png'.format(name_video, i, y, x), crop)
+    crop_flip = cv2.flip(crop, 1)
+    cv2.imwrite(r'{}-{}-{}{}-flh.png'.format(name_video, i, y, x), crop_flip)
+
 with open(text_file) as f:
     for line in f:
         # create image name and folder
-        arr_line = line.split(' ')[0]
+        if train == 'train':
+            arr_line = line.split(' ')[0]
+        else:
+            arr_line = line.split('\n')[0]
         path_video = arr_line.split('/')
         num_name = len(path_video)
         name_video = path_video[num_name - 1].split('.')[0]
@@ -62,28 +71,36 @@ with open(text_file) as f:
             crop = frame[y:y+224, x:x+224].copy()
 
             cv2.imwrite(r'{}-{}.png'.format(name_video, i),crop)
-            if not gen_aug:
-                crop_flip = crop.copy()
-                crop_flip = cv2.flip(crop_flip, 1)
-                cv2.imwrite(r'{}-{}-flip.png'.format(name_video, i),crop_flip)
-            else:
-                #make augmentation data image
-                for k in range(1, aug_size + 1):
-                    flip = random.randint(0,1)
-                    # random horizontal flipping
+            if train == 'train':
+                if not gen_aug:
                     crop_flip = crop.copy()
-                    if (flip==1):
-                        crop_flip = cv2.flip(crop_flip, flip)
-                    # random rgb jittering
-                    B = crop_flip[:,:,0]
-                    G = crop_flip[:,:,1]
-                    R = crop_flip[:,:,2]
-                    crop_flip = np.dstack( (
-                        np.roll(B, random.randint(1,5) - 3, axis=random.randint(0,1)), 
-                        np.roll(G, random.randint(1,5) - 3, axis=random.randint(0,1)), 
-                        np.roll(R, random.randint(1,5) - 3, axis=random.randint(0,1))
-                    ))
-                    cv2.imwrite(r'{}-{}-{}.png'.format(name_video, i, k),crop_flip)
+                    crop_flip = cv2.flip(crop_flip, 1)
+                    cv2.imwrite(r'{}-{}-flip.png'.format(name_video, i),crop_flip)
+                else:
+                    #make augmentation data image
+                    for k in range(1, aug_size + 1):
+                        flip = random.randint(0,1)
+                        # random horizontal flipping
+                        crop_flip = crop.copy()
+                        if (flip==1):
+                            crop_flip = cv2.flip(crop_flip, flip)
+                        # random rgb jittering
+                        B = crop_flip[:,:,0]
+                        G = crop_flip[:,:,1]
+                        R = crop_flip[:,:,2]
+                        crop_flip = np.dstack( (
+                            np.roll(B, random.randint(1,5) - 3, axis=random.randint(0,1)), 
+                            np.roll(G, random.randint(1,5) - 3, axis=random.randint(0,1)), 
+                            np.roll(R, random.randint(1,5) - 3, axis=random.randint(0,1))
+                        ))
+                        cv2.imwrite(r'{}-{}-{}.png'.format(name_video, i, k),crop_flip)
+            else:
+                # crop center and 4 corners + flip => 10 images
+                crop_image(frame, name_video, i, 0, 0)
+                crop_image(frame, name_video, i, 8, 48)
+                crop_image(frame, name_video, i, 16, 96)
+                crop_image(frame, name_video, i, 16, 0)
+                crop_image(frame, name_video, i, 0, 96)
 
         print name_video
 
