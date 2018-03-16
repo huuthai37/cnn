@@ -56,22 +56,16 @@ with open(text_file) as f:
             i = i + 1
             if (i%sample_rate != 0):
                 continue
-            
-            # Our operations on the frame come here
-            # img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-            # Display the resulting frame
-            # cv2.imshow('frame',frame)
-            # print r'{}{}-{}.png'.format(path, name_video, i)
-
-            # random crop to 224x224
-            x = random.randint(0,96)
-            y = random.randint(0,16)
-            
-            crop = frame[y:y+224, x:x+224].copy()
-
-            cv2.imwrite(r'{}-{}.png'.format(name_video, i),crop)
             if train == 'train':
+                # random crop to 224x224
+                x = random.randint(0,96)
+                y = random.randint(0,16)
+                
+                crop = frame[y:y+224, x:x+224].copy()
+
+                cv2.imwrite(r'{}-{}.png'.format(name_video, i),crop)
+                
                 if not gen_aug:
                     crop_flip = crop.copy()
                     crop_flip = cv2.flip(crop_flip, 1)
