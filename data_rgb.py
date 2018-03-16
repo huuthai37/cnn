@@ -6,6 +6,12 @@ import numpy as np
 
 # data_rgb.py train 10 noaug 
 
+def crop_image(frame, name_video, i, y, x):
+    crop = frame[y:y+224, x:x+224].copy()
+    cv2.imwrite(r'{}-{}-{}{}.jpg'.format(name_video, i, y, x), crop)
+    crop_flip = cv2.flip(crop, 1)
+    cv2.imwrite(r'{}-{}-{}{}-flh.jpg'.format(name_video, i, y, x), crop_flip)
+    
 train = sys.argv[1]
 sample_rate = int(sys.argv[2])
 if sys.argv[3] == 'aug':
@@ -17,12 +23,6 @@ else:
 data_folder = r'/home/oanhnt/thainh/data/rgb/{}/'.format(train)
 text_file = r'/home/oanhnt/thainh/ucfTrainTestlist/{}list01.txt'.format(train)
 data_video_folder = '/home/oanhnt/thainh/UCF-101/'
-
-def crop_image(frame, name_video, i, y, x):
-    crop = frame[y:y+224, x:x+224].copy()
-    cv2.imwrite(r'{}-{}-{}{}.jpg'.format(name_video, i, y, x), crop)
-    crop_flip = cv2.flip(crop, 1)
-    cv2.imwrite(r'{}-{}-{}{}-flh.jpg'.format(name_video, i, y, x), crop_flip)
 
 with open(text_file) as f:
     for line in f:
