@@ -103,7 +103,7 @@ x = Dense(classes, activation='softmax', name='predictions')(x)
 result_model = Model(inputs=input_new, outputs=x)
 
 # Run
-result_model.compile(loss='mean_squared_error',
+result_model.compile(loss='categorical_crossentropy',
               optimizer=optimizers.SGD(lr=1e-3, momentum=0.9),
               metrics=['accuracy'])
 
