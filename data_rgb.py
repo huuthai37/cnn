@@ -20,9 +20,15 @@ if sys.argv[3] == 'aug':
 else:
     gen_aug = False
 
-data_folder = r'/home/oanhnt/thainh/data/rgb/{}/'.format(train)
-text_file = r'/home/oanhnt/thainh/ucfTrainTestlist/{}list01.txt'.format(train)
-data_video_folder = '/home/oanhnt/thainh/UCF-101/'
+server = False
+if server:
+    data_folder = r'/home/oanhnt/thainh/data/rgb/{}/'.format(train)
+    text_file = r'/home/oanhnt/thainh/ucfTrainTestlist/{}list01.txt'.format(train)
+    data_video_folder = '/home/oanhnt/thainh/UCF-101/'
+else:
+    data_folder = r'//mnt/smalldata/rgb/{}/'.format(train)
+    text_file = r'/mnt/ucf101/ucfTrainTestlist/{}b.txt'.format(train)
+    data_video_folder = '/mnt/ucf101/UCF-101/'
 
 with open(text_file) as f:
     for line in f:
