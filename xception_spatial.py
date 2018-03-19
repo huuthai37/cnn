@@ -64,7 +64,7 @@ else:
 x = Dense(classes, activation='softmax', name='predictions')(model.layers[-2].output)
 
 #Then create the corresponding model 
-my_model = Model(input=model.input, output=x)
+my_model = Model(inputs=model.input, outputs=x)
 # my_model.summary()
 metrics = ['accuracy']
 # if classes >= 10:
@@ -79,7 +79,7 @@ if train:
     my_model.fit_generator(
         train_batches,
         epochs=epochs,
-        verbose=1
+        verbose=2
     )
     my_model.save_weights('xception_spatial_{}e.h5'.format(epochs + old_epochs))
 else:

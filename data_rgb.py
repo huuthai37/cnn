@@ -58,17 +58,16 @@ with open(text_file) as f:
                 continue
 
             if train == 'train':
-                # random crop to 224x224
-                x = random.randint(0,96)
-                y = random.randint(0,16)
+                # random crop to 240x240
+                x = random.randint(0,80)
                 
-                crop = frame[y:y+224, x:x+224].copy()
+                crop = frame[:, x:x+240].copy()
 
-                cv2.imwrite(r'{}-{}.png'.format(name_video, i),crop)
+                cv2.imwrite(r'{}-{}.jpg'.format(name_video, i),crop)
                 
                 crop_flip = crop.copy()
                 crop_flip = cv2.flip(crop_flip, 1)
-                cv2.imwrite(r'{}-{}-flip.png'.format(name_video, i),crop_flip)
+                cv2.imwrite(r'{}-{}-flip.jpg'.format(name_video, i),crop_flip)
                 
                 if gen_aug:
                     #make augmentation data image
@@ -87,10 +86,20 @@ with open(text_file) as f:
                             np.roll(G, random.randint(1,5) - 3, axis=random.randint(0,1)), 
                             np.roll(R, random.randint(1,5) - 3, axis=random.randint(0,1))
                         ))
-                        cv2.imwrite(r'{}-{}-{}.png'.format(name_video, i, k),crop_flip)
+                        cv2.imwrite(r'{}-{}-{}.jpg'.format(name_video, i, k),crop_flip)
             else:
                 # crop center and 4 corners + flip => 10 images 
-                crop_image(frame, name_video, i, 8, 48)
+                # random crop to 240x240
+                x = random.randint(0,80)
+                
+                crop = frame[:, x:x+240].copy()
+
+                cv2.imwrite(r'{}-{}.jpg'.format(name_video, i),crop)
+                
+                crop_flip = crop.copy()
+                crop_flip = cv2.flip(crop_flip, 1)
+                cv2.imwrite(r'{}-{}-flip.jpg'.format(name_video, i),crop_flip)
+
                 if gen_aug:
                     crop_image(frame, name_video, i, 0, 0)
                     crop_image(frame, name_video, i, 16, 96)
