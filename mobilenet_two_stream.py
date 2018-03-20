@@ -84,7 +84,7 @@ if train & (not retrain):
     spatial_model.load_weights('weights/mobilenet_spatial_{}e.h5'.format(spa_epochs))
 
 # Fusion
-z = Average()([x, y])
+z = Average()([y, x])
 
 # Final touch
 result_model = Model(inputs=[model2.input,input_opt], outputs=z)
@@ -102,7 +102,7 @@ if train:
         keys = pickle.load(f1)
     len_samples = len(keys)
     print('-'*40)
-    print('MobileNet Optical+RGB stream only: Training')
+    print('MobileNet Optical+RGB stream: Training')
     print('-'*40)
     print 'Number samples: {}'.format(len_samples)
     
@@ -122,7 +122,7 @@ else:
         keys = pickle.load(f2)
     len_samples = len(keys)
     print('-'*40)
-    print('MobileNet Optical+RGB stream only: Testing')
+    print('MobileNet Optical+RGB stream: Testing')
     print('-'*40)
     print 'Number samples: {}'.format(len_samples)
 
