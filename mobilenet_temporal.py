@@ -7,6 +7,7 @@ from keras import optimizers
 import pickle
 import random
 import numpy as np
+import config
 
 def convert_weights(weights):
     mat = weights[0]
@@ -39,7 +40,7 @@ classes = int(sys.argv[4])
 depth = 20
 input_shape = (224,224,depth)
 
-server = False
+server = config.server()
 if server:
     if train:
         out_file = '/home/oanhnt/thainh/data/database/train-opt.pickle'

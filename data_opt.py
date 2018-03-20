@@ -4,10 +4,11 @@ import sys
 import random
 import numpy as np
 import pickle
+import config
 
 # data_opt.py train
 train = sys.argv[1]
-server = True
+server = config.server()
 debug = True
 
 if server:

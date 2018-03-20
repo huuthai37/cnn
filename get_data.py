@@ -4,8 +4,9 @@ import random
 from PIL import Image
 import cv2
 from keras.utils import np_utils
+import config
 
-server = False
+server = config.server()
 
 def chunks(l, n):
     """Yield successive n-sized chunks from l"""

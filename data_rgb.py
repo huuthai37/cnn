@@ -3,6 +3,7 @@ import os
 import sys
 import random
 import numpy as np
+import config
 
 # data_rgb.py train 10 noaug 
 
@@ -20,7 +21,7 @@ if sys.argv[3] == 'aug':
 else:
     gen_aug = False
 
-server = False
+server = config.server()
 if server:
     data_folder = r'/home/oanhnt/thainh/data/rgb/{}/'.format(train)
     text_file = r'/home/oanhnt/thainh/ucfTrainTestlist/{}list01.txt'.format(train)

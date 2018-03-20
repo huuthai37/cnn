@@ -4,11 +4,12 @@ import sys
 import random
 import numpy as np
 import pickle
+import config
 
 # data_opt2.py train
 train = sys.argv[1]
 sample_rate = 2
-server = True
+server = config.server()
 debug = False
 
 if server:

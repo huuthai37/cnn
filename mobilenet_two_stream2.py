@@ -9,9 +9,9 @@ import random
 import numpy as np
 import config
 
-# train: python mobilenet_two_stream.py train 32 1 101 0 0
-# test: python mobilenet_two_stream.py test 32 1 101
-# retrain: python mobilenet_two_stream.py retrain 32 1 101 1
+# train: python mobilenet_two_stream2.py train 32 1 101 0 0
+# test: python mobilenet_two_stream2.py test 32 1 101
+# retrain: python mobilenet_two_stream2.py retrain 32 1 101 1
 if sys.argv[1] == 'train':
     train = True
     retrain = False
@@ -36,16 +36,16 @@ input_shape = (224,224,depth)
 server = config.server()
 if server:
     if train:
-        out_file = '/home/oanhnt/thainh/data/database/train-opt.pickle'
+        out_file = '/home/oanhnt/thainh/data/database/train-opt2.pickle'
     else:
-        out_file = '/home/oanhnt/thainh/data/database/test-opt.pickle'
+        out_file = '/home/oanhnt/thainh/data/database/test-opt2.pickle'
 else:
     if train:
-        out_file = '/mnt/smalldata/database/train-opt.pickle'
+        out_file = '/mnt/smalldata/database/train-opt2.pickle'
     else:
-        out_file = '/mnt/smalldata/database/test-opt.pickle'
+        out_file = '/mnt/smalldata/database/test-opt2.pickle'
 
-# two_stream
+# Temporal
 model = keras.applications.mobilenet.MobileNet(
     include_top=True,
 )
@@ -68,9 +68,9 @@ for i in range(2, len(layers)-3):
 
 x = Flatten()(x)
 x = Dense(classes, activation='softmax', name='predictions_x')(x)
-two_stream_model = Model(inputs=input_opt, outputs=x)
+temporal_model = Model(inputs=input_opt, outputs=x)
 if train & (not retrain):
-    two_stream_model.load_weights('weights/mobilenet_two_stream1_{}e.h5'.format(tem_epochs))
+    temporal_model.load_weights('weights/mobilenet_temporal1_{}e.h5'.format(tem_epochs))
 
 # Spatial
 model2 = keras.applications.mobilenet.MobileNet(
@@ -96,13 +96,13 @@ result_model.compile(loss='categorical_crossentropy',
 
 if train:
     if retrain:
-        result_model.load_weights('weights/mobilenet_twostream1_{}e.h5'.format(old_epochs))
+        result_model.load_weights('weights/mobilenet_twostream2_{}e.h5'.format(old_epochs))
 
     with open(out_file,'rb') as f1:
         keys = pickle.load(f1)
     len_samples = len(keys)
     print('-'*40)
-    print('MobileNet Optical+RGB stream only: Training')
+    print('MobileNet Sampled Optical+RGB stream only: Training')
     print('-'*40)
     print 'Number samples: {}'.format(len_samples)
     
@@ -112,20 +112,20 @@ if train:
         print('-'*40)
 
         random.shuffle(keys)
-        result_model.fit_generator(gd.getTrainData(keys,batch_size,classes,4,train), verbose=1, max_queue_size=2, steps_per_epoch=len_samples/batch_size, epochs=1)
-        result_model.save_weights('weights/mobilenet_twostream1_{}e.h5'.format(old_epochs+1+e))
+        result_model.fit_generator(gd.getTrainData(keys,batch_size,classes,5,train), verbose=1, max_queue_size=2, steps_per_epoch=len_samples/batch_size, epochs=1)
+        result_model.save_weights('weights/mobilenet_twostream2_{}e.h5'.format(old_epochs+1+e))
 
 else:
-    result_model.load_weights('weights/mobilenet_twostream1_{}e.h5'.format(epochs))
+    result_model.load_weights('weights/mobilenet_twostream2_{}e.h5'.format(epochs))
 
     with open(out_file,'rb') as f2:
         keys = pickle.load(f2)
     len_samples = len(keys)
     print('-'*40)
-    print('MobileNet Optical+RGB stream only: Testing')
+    print('MobileNet Sampled Optical+RGB stream only: Testing')
     print('-'*40)
     print 'Number samples: {}'.format(len_samples)
 
-    score = result_model.evaluate_generator(gd.getTrainData(keys,batch_size,classes,4,train), max_queue_size=3, steps=len_samples/batch_size)
+    score = result_model.evaluate_generator(gd.getTrainData(keys,batch_size,classes,5,train), max_queue_size=3, steps=len_samples/batch_size)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])

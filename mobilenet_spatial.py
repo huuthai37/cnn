@@ -6,6 +6,7 @@ from keras import optimizers
 import get_data as gd
 import pickle
 import random
+import config
 
 # train: python mobilenet_spatial.py train 32 1 101
 # test: python mobilenet_spatial.py test 32 1 101
@@ -26,7 +27,7 @@ batch_size = int(sys.argv[2])
 epochs = int(sys.argv[3])
 classes = int(sys.argv[4])
 
-server = False
+server = config.server()
 if server:
     if train:
         out_file = '/home/oanhnt/thainh/data/database/train-opt.pickle'

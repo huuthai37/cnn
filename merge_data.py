@@ -1,9 +1,10 @@
 import numpy as np 
 import pickle
 import sys
+import config
 
 train = sys.argv[1]
-server = True
+server = config.server()
 
 if server:
     opt_file = r'/home/oanhnt/thainh/data/database/{}-opt.pickle'.format(train)
