@@ -8,7 +8,7 @@ import pickle
 # data_opt.py train
 train = sys.argv[1]
 server = True
-debug = False
+debug = True
 
 if server:
     data_folder = r'/home/oanhnt/thainh/data/opt/{}/'.format(train)
@@ -65,7 +65,7 @@ with open(text_file) as f1:
         os.chdir(path + name_video)
         while(True):
             # After 10 frames push into data
-            if k%10 == 0 & 0 != k:
+            if (k%10 == 0) & (0 != k):
                 data.append([folder_video + '/' + name_video, 2*(k-10), video_class])
                 c+=1
             # Capture frame-by-frame
@@ -90,7 +90,7 @@ with open(text_file) as f1:
 
             k+=1
 
-        if k%10 > 4:
+        if (k%10 > 4):
             data.append([folder_video + '/' + name_video, 2*(k-10), video_class])
             c+=1
 

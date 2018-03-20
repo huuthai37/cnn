@@ -5,9 +5,9 @@ import random
 import numpy as np
 import pickle
 
-# data_opt.py train 1
+# data_opt2.py train
 train = sys.argv[1]
-sample_rate = int(sys.argv[2])
+sample_rate = 2
 server = True
 debug = False
 
@@ -65,15 +65,13 @@ with open(text_file) as f1:
         k = 0
         m = 0
         os.chdir(path + name_video)
-        while(True):
-            
+        while(True):  
             # Capture frame-by-frame
             ret, frame2 = cap.read()
             if not ret:
                 break;
 
             if m%sample_rate == 0:
-                # After 10 frames push into data
                 if (k%5 == 0) & (k > 5):
                     data.append([folder_video + '/' + name_video, 2*(k-10), video_class])
                     c+=1
@@ -96,7 +94,7 @@ with open(text_file) as f1:
                 k+=1
             m+=1
 
-        if k%5 > 2:
+        if (k%5 > 2) | (k%5 == 0):
             data.append([folder_video + '/' + name_video, 2*(k-10), video_class])
             c+=1
 
