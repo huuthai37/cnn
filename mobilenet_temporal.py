@@ -95,7 +95,7 @@ if train:
     if retrain:
         result_model.load_weights('weights/mobilenet_temporal1_{}e.h5'.format(old_epochs))
     else:
-        result_model.get_layer('conv_new').set_weights(gd.convert_weights(layers[1].get_weights(), depth))
+        result_model.get_layer('conv_new').set_weights(gd.convert_weights(layers[2].get_weights(), depth))
 
     with open(out_file,'rb') as f1:
         keys = pickle.load(f1)
