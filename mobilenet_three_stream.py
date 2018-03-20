@@ -72,6 +72,7 @@ x = Dense(classes, activation='softmax', name='predictions_x')(x)
 temporal_model = Model(inputs=input_opt, outputs=x)
 if train & (not retrain):
     temporal_model.load_weights('weights/mobilenet_temporal1_{}e.h5'.format(tem_epochs))
+    # temporal_model.load_weights('../../mobilenet_opt_weights_63e.h5')
 
 # Spatial
 model2 = keras.applications.mobilenet.MobileNet(
@@ -83,6 +84,7 @@ y = Dense(classes, activation='softmax', name='predictions_y')(y)
 spatial_model = Model(inputs=model2.input, outputs=y)
 if train & (not retrain):
     spatial_model.load_weights('weights/mobilenet_spatial_{}e.h5'.format(spa_epochs))
+    # spatial_model.load_weights('../../mobilenet_nor_weights_v3.h5')
 
 # Temporal Sparse
 model3 = keras.applications.mobilenet.MobileNet(
@@ -110,6 +112,7 @@ z = Dense(classes, activation='softmax', name='predictions_xb')(z)
 temporal_sparse_model = Model(inputs=input_opt2, outputs=z)
 if train & (not retrain):
     temporal_sparse_model.load_weights('weights/mobilenet_temporal2_{}e.h5'.format(tem_epochs))
+    # temporal_sparse_model.load_weights('../../mobilenet_opt2_weights_3e.h5')
 
 # Fusion
 av = Average()([y, x, z])
