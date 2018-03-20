@@ -12,11 +12,11 @@ server = True
 debug = False
 
 if server:
-    data_folder = r'/home/oanhnt/thainh/data/opt/{}/'.format(train)
+    data_folder = r'/home/oanhnt/thainh/data/opt2/{}/'.format(train)
     text_file = r'/home/oanhnt/thainh/ucfTrainTestlist/{}list01.txt'.format(train)
     class_file = r'/home/oanhnt/thainh/ucfTrainTestlist/classInd.txt'
     data_video_folder = '/home/oanhnt/thainh/UCF-101/'
-    out_file = r'/home/oanhnt/thainh/data/database/{}-opt.pickle'.format(train)
+    out_file = r'/home/oanhnt/thainh/data/database/{}-opt2.pickle'.format(train)
 else:
     data_folder = r'/mnt/smalldata/opt2/{}/'.format(train)
     out_file = r'/mnt/smalldata/database/{}-opt2.pickle'.format(train)
