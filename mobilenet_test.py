@@ -63,7 +63,7 @@ else:
     model = keras.applications.mobilenet.MobileNet(
         include_top=True,  
     )
-
+model.summary()
 # Disassemble layers
 layers = [l for l in model.layers]
 
