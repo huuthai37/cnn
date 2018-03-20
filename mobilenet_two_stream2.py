@@ -62,7 +62,7 @@ x = Conv2D(filters=32,
           strides=(2,2),
           name='conv_new')(x)
 
-for i in range(2, len(layers)-3):
+for i in range(3, len(layers)-3):
     layers[i].name = str(i)
     x = layers[i](x)
 
