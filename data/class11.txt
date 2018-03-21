@@ -1,0 +1,11 @@
+0 Basketball
+1 Biking
+2 Diving
+3 GolfSwing
+4 HorseRiding
+5 SoccerJuggling
+6 Swing
+7 TennisSwing
+8 TrampolineJumping
+9 VolleyballSpiking
+10 WalkingWithDog
