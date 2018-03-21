@@ -54,7 +54,7 @@ model = keras.applications.mobilenet.MobileNet(
 layers = [l for l in model.layers]
 
 input_opt = Input(shape=input_shape)
-x = ZeroPadding2D(padding=(1, 1), name='conv1_pad')(input_opt)
+x = ZeroPadding2D(padding=(1, 1), name='conv1_padx')(input_opt)
 x = Conv2D(filters=32, 
           kernel_size=(3, 3),
           padding='valid',
@@ -68,9 +68,9 @@ for i in range(3, len(layers)-3):
 
 x = Flatten()(x)
 x = Dense(classes, activation='softmax', name='predictions_x')(x)
-two_stream_model = Model(inputs=input_opt, outputs=x)
+temporal_model = Model(inputs=input_opt, outputs=x)
 if train & (not retrain):
-    two_stream_model.load_weights('weights/mobilenet_two_stream1_{}e.h5'.format(tem_epochs))
+    temporal_model.load_weights('weights/mobilenet_temporal1_{}e.h5'.format(tem_epochs))
 
 # Spatial
 model2 = keras.applications.mobilenet.MobileNet(
