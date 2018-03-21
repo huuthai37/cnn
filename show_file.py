@@ -22,10 +22,12 @@ length = len(data)
 print length
 for i in range(length):
 	fileimg = data[i][0]
-	img = cv2.imread(dir_data + fileimg + '/' + str(data[i][1]) + '.jpg')
-	if img is None:
-		print data[i]
-	if i%5000 == 0:
-		print i
+	start_opt = data[i][1]
+	for j in range(start_opt, start_opt + 20):
+		img = cv2.imread(dir_data + fileimg + '/' + str(j) + '.jpg')
+		if img is None:
+			print data[i]
+	if i%1000 == 0:
+		print 'Checked {}/{}'.format(i, length)
 for i in range(num):
 	print data[i]
