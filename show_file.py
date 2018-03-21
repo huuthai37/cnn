@@ -27,6 +27,7 @@ for i in range(length):
 		img = cv2.imread(dir_data + fileimg + '/' + str(j) + '.jpg')
 		if img is None:
 			print data[i]
+			print i
 	if i%1000 == 0:
 		print 'Checked {}/{}'.format(i, length)
 for i in range(num):
