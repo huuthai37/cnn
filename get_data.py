@@ -40,22 +40,22 @@ def getTrainData(keys,batch_size,classes,mode,data):
             if mode == 1:
                 X_train,Y_train=stackRGB(keys[i:i+batch_size],data_folder_rgb)
             elif mode == 2:
-                X_train,Y_train=stackOpticalFlow(keys[i:i+batch_size],data_folder)
+                X_train,Y_train=stackOpticalFlow(keys[i:i+batch_size],data_folder,data)
             elif mode == 3:
-                X_train,Y_train=stackOpticalFlow(keys[i:i+batch_size],data_folder_opt2)
+                X_train,Y_train=stackOpticalFlow(keys[i:i+batch_size],data_folder_opt2,data)
             elif mode == 4:
-                X_train,Y_train=stackOpticalFlowRGB(keys[i:i+batch_size],data_folder,data_folder_rgb)
+                X_train,Y_train=stackOpticalFlowRGB(keys[i:i+batch_size],data_folder,data_folder_rgb,data)
             elif mode == 5:
-                X_train,Y_train=stackSparseOpticalFlowRGB(keys[i:i+batch_size],data_folder_opt2,data_folder_rgb)
+                X_train,Y_train=stackSparseOpticalFlowRGB(keys[i:i+batch_size],data_folder_opt2,data_folder_rgb,data)
             else:
-                X_train,Y_train=stackThreeStream(keys[i:i+batch_size],data_folder,data_folder_rgb,data_folder_opt2)
+                X_train,Y_train=stackThreeStream(keys[i:i+batch_size],data_folder,data_folder_rgb,data_folder_opt2,data)
 
             Y_train=np_utils.to_categorical(Y_train,classes)
             if not data:
                 print 'Test batch {}'.format(i/batch_size+1)
             yield X_train, np.array(Y_train)
 
-def stackOpticalFlow(chunk,data_folder):
+def stackOpticalFlow(chunk,data_folder,train):
     labels = []
     stack_opt = []
     for opt in chunk:
@@ -63,14 +63,19 @@ def stackOpticalFlow(chunk,data_folder):
         start_opt = opt[1]
         labels.append(opt[2])
         arrays = []
+        # print(opt[0], opt[1])
 
         for i in range(start_opt, start_opt + 20):
             img=Image.open(data_folder + folder_opt + str(i) + '.jpg')
             arrays.append(img)
 
         stack = np.dstack(arrays)
-        ax = random.randint(0,96)
-        ay = random.randint(0,16)
+        if train:
+            ax = random.randint(0,96)
+            ay = random.randint(0,16)
+        else:
+            ax = 48
+            ay = 8
         nstack = stack[ay:ay+224,ax:ax+224,:]
         nstack = nstack.astype('float16',copy=False)
         nstack/=255
@@ -100,7 +105,7 @@ def stackRGB(chunk,data_folder_rgb):
 
     return (np.array(stack_rgb), labels)
 
-def stackOpticalFlowRGB(chunk,data_folder,data_folder_rgb):
+def stackOpticalFlowRGB(chunk,data_folder,data_folder_rgb,train):
     labels = []
     stack_opt = []
     stack_rgb = []
@@ -125,8 +130,12 @@ def stackOpticalFlowRGB(chunk,data_folder,data_folder_rgb):
             arrays.append(img)
 
         stack = np.dstack(arrays)
-        ax = random.randint(0,96)
-        ay = random.randint(0,16)
+        if train:
+            ax = random.randint(0,96)
+            ay = random.randint(0,16)
+        else:
+            ax = 48
+            ay = 8
         nstack = stack[ay:ay+224,ax:ax+224,:]
         nstack = nstack.astype('float16',copy=False)
         nstack/=255
@@ -136,7 +145,7 @@ def stackOpticalFlowRGB(chunk,data_folder,data_folder_rgb):
 
     return [np.array(stack_rgb), np.array(stack_opt)], labels
 
-def stackSparseOpticalFlowRGB(chunk,data_folder,data_folder_rgb):
+def stackSparseOpticalFlowRGB(chunk,data_folder,data_folder_rgb,train):
     labels = []
     stack_opt = []
     stack_rgb = []
@@ -161,8 +170,12 @@ def stackSparseOpticalFlowRGB(chunk,data_folder,data_folder_rgb):
             arrays.append(img)
 
         stack = np.dstack(arrays)
-        ax = random.randint(0,96)
-        ay = random.randint(0,16)
+        if train:
+            ax = random.randint(0,96)
+            ay = random.randint(0,16)
+        else:
+            ax = 48
+            ay = 8
         nstack = stack[ay:ay+224,ax:ax+224,:]
         nstack = nstack.astype('float16',copy=False)
         nstack/=255
@@ -172,7 +185,7 @@ def stackSparseOpticalFlowRGB(chunk,data_folder,data_folder_rgb):
 
     return [np.array(stack_rgb), np.array(stack_opt)], labels
 
-def stackThreeStream(chunk,data_folder,data_folder_rgb,data_folder_opt2):
+def stackThreeStream(chunk,data_folder,data_folder_rgb,data_folder_opt2,train):
     labels = []
     stack_opt = []
     stack_opt2 = []
@@ -200,8 +213,12 @@ def stackThreeStream(chunk,data_folder,data_folder_rgb,data_folder_opt2):
             arrays.append(img)
 
         stack = np.dstack(arrays)
-        ax = random.randint(0,96)
-        ay = random.randint(0,16)
+        if train:
+            ax = random.randint(0,96)
+            ay = random.randint(0,16)
+        else:
+            ax = 48
+            ay = 8
         nstack = stack[ay:ay+224,ax:ax+224,:]
         nstack = nstack.astype('float16',copy=False)
         nstack/=255
@@ -212,8 +229,12 @@ def stackThreeStream(chunk,data_folder,data_folder_rgb,data_folder_opt2):
             arrays2.append(img)
 
         stack2 = np.dstack(arrays2)
-        ax = random.randint(0,96)
-        ay = random.randint(0,16)
+        if train:
+            ax = random.randint(0,96)
+            ay = random.randint(0,16)
+        else:
+            ax = 48
+            ay = 8
         nstack2 = stack2[ay:ay+224,ax:ax+224,:]
         nstack2 = nstack2.astype('float16',copy=False)
         nstack2/=255
