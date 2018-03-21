@@ -10,7 +10,7 @@ import config
 train = sys.argv[1]
 sample_rate = 2
 server = config.server()
-debug = False
+debug = True
 
 if server:
     data_folder = r'/home/oanhnt/thainh/data/opt2/{}/'.format(train)
