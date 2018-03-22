@@ -55,7 +55,7 @@ model = keras.applications.mobilenet.MobileNet(
 layers = [l for l in model.layers]
 
 input_opt = Input(shape=input_shape)
-x = ZeroPadding2D(padding=(1, 1), name='conv1_pad')(input_opt)
+x = ZeroPadding2D(padding=(1, 1), name='conv1_pada')(input_opt)
 x = Conv2D(filters=32, 
           kernel_size=(3, 3),
           padding='valid',
@@ -111,7 +111,7 @@ z = Flatten()(z)
 z = Dense(classes, activation='softmax', name='predictions_xb')(z)
 temporal_sparse_model = Model(inputs=input_opt2, outputs=z)
 if train & (not retrain):
-    temporal_sparse_model.load_weights('weights/mobilenet_temporal2_{}e.h5'.format(tem_epochs))
+    temporal_sparse_model.load_weights('weights/mobilenet_temporal2_{}e.h5'.format(tem2_epochs))
     # temporal_sparse_model.load_weights('../../mobilenet_opt2_weights_3e.h5')
 
 # Fusion
