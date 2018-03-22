@@ -9,16 +9,13 @@ import random
 import numpy as np
 import config
 
-# train: python mobilenet_three_stream.py train 32 1 101 0 0 0
+# train: python mobilenet_three_stream.py train 32 1 101
 # test: python mobilenet_three_stream.py test 32 1 101
 # retrain: python mobilenet_three_stream.py retrain 32 1 101 1
 if sys.argv[1] == 'train':
     train = True
     retrain = False
     old_epochs = 0
-    spa_epochs = int(sys.argv[5])
-    tem_epochs = int(sys.argv[6])
-    tem2_epochs = int(sys.argv[7])
 elif sys.argv[1] == 'retrain':
     train = True
     retrain = True
@@ -111,7 +108,7 @@ z = Flatten()(z)
 z = Dense(classes, activation='softmax', name='predictions_xb')(z)
 temporal_sparse_model = Model(inputs=input_opt2, outputs=z)
 if train & (not retrain):
-    temporal_sparse_model.get_layer('conv_new').set_weights(gd.convert_weights(layers3[2].get_weights(), depth))
+    temporal_sparse_model.get_layer('conv_newb').set_weights(gd.convert_weights(layers3[2].get_weights(), depth))
 
 # Fusion
 av = Average()([y, x, z])
@@ -126,7 +123,7 @@ result_model.compile(loss='categorical_crossentropy',
 
 if train:
     if retrain:
-        result_model.load_weights('weights/mobilenet_three_stream_{}e.h5'.format(old_epochs))
+        result_model.load_weights('weights/mobilenet_three_stream2_{}e.h5'.format(old_epochs))
 
     with open(out_file,'rb') as f1:
         keys = pickle.load(f1)
@@ -143,10 +140,10 @@ if train:
 
         random.shuffle(keys)
         result_model.fit_generator(gd.getTrainData(keys,batch_size,classes,6,train), verbose=1, max_queue_size=2, steps_per_epoch=len_samples/batch_size, epochs=1)
-        result_model.save_weights('weights/mobilenet_three_stream_{}e.h5'.format(old_epochs+1+e))
+        result_model.save_weights('weights/mobilenet_three_stream2_{}e.h5'.format(old_epochs+1+e))
 
 else:
-    result_model.load_weights('weights/mobilenet_three_stream_{}e.h5'.format(epochs))
+    result_model.load_weights('weights/mobilenet_three_stream2_{}e.h5'.format(epochs))
 
     with open(out_file,'rb') as f2:
         keys = pickle.load(f2)
