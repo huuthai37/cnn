@@ -31,7 +31,7 @@ else:
     data_video_folder = '/mnt/UCF-11/'
 
 text_file = r'data/{}list.txt'.format(train)
-
+count = 0
 with open(text_file) as f:
     for line in f:
         # create image name and folder
@@ -76,6 +76,7 @@ with open(text_file) as f:
                     crop_flip = crop.copy()
                     crop_flip = cv2.flip(crop_flip, 1)
                     cv2.imwrite(r'{}-{}-flip.jpg'.format(name_video, i),crop_flip)
+                    count += 2
                     
                     if gen_aug:
                         #make augmentation data image
@@ -107,6 +108,7 @@ with open(text_file) as f:
                     crop_flip = crop.copy()
                     crop_flip = cv2.flip(crop_flip, 1)
                     cv2.imwrite(r'{}-{}-flip.jpg'.format(name_video, i),crop_flip)
+                    count += 2
 
                     if gen_aug:
                         crop_image(frame, name_video, i, 0, 0)
@@ -117,4 +119,5 @@ with open(text_file) as f:
         print name_video
         # When everything done, release the capture
         cap.release()
+print count
 # print("--- %s seconds ---" % (time.time() - start_time))
