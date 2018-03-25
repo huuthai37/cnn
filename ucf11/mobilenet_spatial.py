@@ -83,7 +83,7 @@ x = Reshape((classes,), name='reshape_2')(x)
 
 #Then create the corresponding model 
 result_model = Model(input=model.input, output=x)
-result_model.summary()
+# result_model.summary()
 result_model.compile(loss='categorical_crossentropy',
               optimizer=optimizers.SGD(lr=1e-3, momentum=0.9),
               metrics=['accuracy'])
