@@ -42,7 +42,7 @@ else:
 batch_size = int(sys.argv[2])
 epochs = int(sys.argv[3])
 classes = int(sys.argv[4])
-
+len_samples = 430288
 server = config.server()
 if server:
     train_path = '/home/oanhnt/thainh/data/rgb/train'
@@ -98,7 +98,7 @@ if train:
     print('MobileNet RGB stream only: Training')
     print('-'*40)
     
-    result_model.fit_generator(train_batches, verbose=1, callbacks=[plot_losses], max_queue_size=2, steps_per_epoch=len(train_batches)/batch_size, epochs=1)
+    result_model.fit_generator(train_batches, verbose=1, callbacks=[plot_losses], max_queue_size=2, steps_per_epoch=len_samples/batch_size, epochs=1)
     result_model.save_weights('weights/mobilenet_spatial_{}e.h5'.format(old_epochs+1+e))
 else:
     result_model.load_weights('weights/mobilenet_spatial_{}e.h5'.format(epochs))
