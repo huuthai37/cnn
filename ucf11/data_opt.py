@@ -11,7 +11,7 @@ train = sys.argv[1]
 sample_rate = int(sys.argv[2])
 opt_rate = int(10/sample_rate)
 server = config.server()
-debug = True
+debug = False
 
 if server:
     data_folder = r'/home/oanhnt/thainh/data/opt{}/{}/'.format(sample_rate,train)
