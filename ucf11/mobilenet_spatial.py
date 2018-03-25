@@ -43,7 +43,7 @@ else:
 batch_size = int(sys.argv[2])
 epochs = int(sys.argv[3])
 classes = int(sys.argv[4])
-len_samples = 430288
+
 server = config.server()
 if server:
     train_path = '/home/oanhnt/thainh/data/rgb/train'
@@ -53,12 +53,14 @@ else:
     test_path = '/mnt/data11/rgb/test'
 
 if train:
+    len_samples = 86908
     train_batches = ImageDataGenerator(rescale=1./255).flow_from_directory(
         train_path,
         batch_size=batch_size,
         target_size=(224, 224),
     )
 else:
+    en_samples = 36688
     test_batches = ImageDataGenerator(rescale=1./255).flow_from_directory(
         test_path,
         batch_size=batch_size,
