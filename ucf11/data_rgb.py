@@ -35,7 +35,7 @@ text_file = r'data/{}list.txt'.format(train)
 with open(text_file) as f:
     for line in f:
         # create image name and folder
-        if train == 'train':
+        if train != 'test':
             arr_line = line.split(' ')[0]
         else:
             arr_line = line.rstrip()
@@ -65,7 +65,7 @@ with open(text_file) as f:
             if (i%sample_rate != 0):
                 continue
             if not debug:
-                if train == 'train':
+                if train != 'test':
                     # random crop to 240x240
                     x = random.randint(0,80)
                     
