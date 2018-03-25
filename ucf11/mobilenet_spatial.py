@@ -60,7 +60,7 @@ if train:
         target_size=(224, 224),
     )
 else:
-    en_samples = 36688
+    len_samples = 36688
     test_batches = ImageDataGenerator(rescale=1./255).flow_from_directory(
         test_path,
         batch_size=batch_size,
