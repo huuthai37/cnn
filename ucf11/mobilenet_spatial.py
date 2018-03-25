@@ -52,20 +52,20 @@ else:
     test_path = '/mnt/data11/rgb/test'
 
 if train:
-    len_samples = 86908
+    len_samples = 71090
     train_batches = ImageDataGenerator(rescale=1./255).flow_from_directory(
         train_path,
         batch_size=batch_size,
         target_size=(224, 224),
     )
-    len_valid = 2000
+    len_valid = 26392
     valid_batches = ImageDataGenerator(rescale=1./255).flow_from_directory(
         valid_path,
         batch_size=batch_size,
         target_size=(224, 224),
     )
 else:
-    len_samples = 36688
+    len_samples = 26114
     test_batches = ImageDataGenerator(rescale=1./255).flow_from_directory(
         test_path,
         batch_size=batch_size,
