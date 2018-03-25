@@ -4,6 +4,7 @@ from keras.models import Model
 from keras.layers import Dense, Conv2D, Activation, Reshape, Flatten
 from keras import optimizers
 from keras.preprocessing.image import ImageDataGenerator
+from keras.callbacks import ModelCheckpoint
 import pickle
 import random
 import config
@@ -82,7 +83,7 @@ x = Activation('softmax', name='act_softmax')(x)
 x = Reshape((classes,), name='reshape_2')(x)
 
 #Then create the corresponding model 
-result_model = Model(input=model.input, output=x)
+result_model = Model(inputs=model.input, outputs=x)
 # result_model.summary()
 result_model.compile(loss='categorical_crossentropy',
               optimizer=optimizers.SGD(lr=1e-3, momentum=0.9),
@@ -97,9 +98,9 @@ if train:
     print('-'*40)
     print('MobileNet RGB stream only: Training')
     print('-'*40)
-    
-    result_model.fit_generator(train_batches, verbose=1, callbacks=[plot_losses], max_queue_size=2, steps_per_epoch=len_samples/batch_size, epochs=1)
-    result_model.save_weights('weights/mobilenet_spatial_{}e.h5'.format(old_epochs+1+e))
+    check_point = ModelCheckpoint('weights/mobilenet_spatial_{epoch}e.h5', verbose=1, save_weights_only=True)
+    result_model.fit_generator(train_batches, verbose=1, callbacks=[plot_losses,check_point], max_queue_size=2, steps_per_epoch=len_samples/batch_size, epochs=epochs)
+    # result_model.save_weights('weights/mobilenet_spatial_{}e.h5'.format(old_epochs+1+e))
 else:
     result_model.load_weights('weights/mobilenet_spatial_{}e.h5'.format(epochs))
 
