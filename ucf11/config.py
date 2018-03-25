@@ -1,2 +1,2 @@
 def server():
-	return False
+	return True
