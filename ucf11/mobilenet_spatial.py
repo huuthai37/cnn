@@ -8,8 +8,8 @@ import pickle
 import random
 import config
 
-from matplotlib import pyplot as plt
-from IPython.display import clear_output
+# from matplotlib import pyplot as plt
+# from IPython.display import clear_output
 
 # train: python mobilenet_spatial.py train 32 1 101
 # test: python mobilenet_spatial.py test 32 1 101
