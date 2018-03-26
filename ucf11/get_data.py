@@ -44,6 +44,7 @@ def getTrainData(keys,batch_size,classes,mode,train):
             elif mode == 2:
                 X_train,Y_train=stackOpticalFlow(keys[i:i+batch_size],data_folder,data)
                 print('Mode', mode)
+                print keys[i]
             elif mode == 3:
                 X_train,Y_train=stackOpticalFlow(keys[i:i+batch_size],data_folder_opt2,data)
                 print('Mode', mode)
