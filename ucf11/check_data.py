@@ -30,7 +30,7 @@ for i in range(length):
 		height, width, channels = img.shape
 		if (img is None) | (height != 240) | (width != 320):
 			print data[i]
-			print i
+			print img.shape
 	if i%1000 == 0:
 		print 'Checked {}/{}'.format(i, length)
 for i in range(num):
