@@ -27,7 +27,8 @@ for i in range(length):
 		print ('Duplicate', i)
 	for j in range(start_opt, start_opt + 20):
 		img = cv2.imread(dir_data + fileimg + '/' + str(j) + '.jpg')
-		if img is None:
+		height, width, channels = img.shape
+		if (img is None) | (height != 240) | (width != 320):
 			print data[i]
 			print i
 	if i%1000 == 0:
