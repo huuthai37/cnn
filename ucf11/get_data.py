@@ -40,24 +40,24 @@ def getTrainData(keys,batch_size,classes,mode,train):
         for i in range(0, len(keys), batch_size):
             if mode == 1:
                 X_train,Y_train=stackRGB(keys[i:i+batch_size],data_folder_rgb)
-                print('Mode', mode)
+#                 print('Mode', mode)
             elif mode == 2:
                 X_train,Y_train=stackOpticalFlow(keys[i:i+batch_size],data_folder,data)
-                print('Mode', mode)
-                print keys[i]
+#                 print('Mode', mode)
+#                 print keys[i]
             elif mode == 3:
                 X_train,Y_train=stackOpticalFlow(keys[i:i+batch_size],data_folder_opt2,data)
-                print('Mode', mode)
+#                 print('Mode', mode)
             elif mode == 4:
                 X_train,Y_train=stackOpticalFlowRGB(keys[i:i+batch_size],data_folder,data_folder_rgb,data)
-                print('Mode', mode)
+#                 print('Mode', mode)
             elif mode == 5:
                 X_train,Y_train=stackSparseOpticalFlowRGB(keys[i:i+batch_size],data_folder_opt2,data_folder_rgb,data)
-                print('Mode', mode)
+#                 print('Mode', mode)
             else:
                 X_train,Y_train=stackThreeStream(keys[i:i+batch_size],data_folder,data_folder_rgb,data_folder_opt2,data)
-                print('Mode', mode)
-            print len(X_train)
+#                 print('Mode', mode)
+#             print len(X_train)
             Y_train=np_utils.to_categorical(Y_train,classes)
             if not data:
                 print 'Test batch {}'.format(i/batch_size+1)
@@ -73,14 +73,14 @@ def stackOpticalFlow(chunk,data_folder,train):
         arrays = []
         # print(opt[0], opt[1])
 
-        size = 224, 224
         for i in range(start_opt, start_opt + 20):
-            img=Image.open(data_folder + folder_opt + str(i) + '.jpg')
+#             img=Image.open(data_folder + folder_opt + str(i) + '.jpg')
+            img = cv2.imread(data_folder + folder_opt + str(i) + '.jpg')
             height, width, channels = img.shape
             crop_pos = int((width-height)/2)
             img = img[:,crop_pos:crop_pos+height,:]
-            img.thumbnail(size,Image.ANTIALIAS)
-            arrays.append(img)
+            resize_img = cv2.resize(img, (224, 224))
+            arrays.append(resize_img)
 
         # stack = np.dstack(arrays)
         # if train:
@@ -93,7 +93,7 @@ def stackOpticalFlow(chunk,data_folder,train):
         nstack = np.dstack(arrays)
         nstack = nstack.astype('float16',copy=False)
         nstack/=255
-        print nstack.shape
+#         print nstack.shape
         stack_opt.append(nstack)
 
     return (np.array(stack_opt), labels)
