@@ -67,6 +67,8 @@ def stackOpticalFlow(chunk,data_folder,train):
 
         for i in range(start_opt, start_opt + 20):
             img=Image.open(data_folder + folder_opt + str(i) + '.jpg')
+            path = data_folder + folder_opt + str(i) + '.jpg'
+            print path
             arrays.append(img)
 
         stack = np.dstack(arrays)
