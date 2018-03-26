@@ -57,7 +57,7 @@ def getTrainData(keys,batch_size,classes,mode,train):
             else:
                 X_train,Y_train=stackThreeStream(keys[i:i+batch_size],data_folder,data_folder_rgb,data_folder_opt2,data)
                 print('Mode', mode)
-
+            print len(X_train)
             Y_train=np_utils.to_categorical(Y_train,classes)
             if not data:
                 print 'Test batch {}'.format(i/batch_size+1)
