@@ -75,7 +75,7 @@ def stackOpticalFlow(chunk,data_folder,train):
 
         for i in range(start_opt, start_opt + 20):
 #             img=Image.open(data_folder + folder_opt + str(i) + '.jpg')
-            img = cv2.imread(data_folder + folder_opt + str(i) + '.jpg', cv2.CV_LOAD_IMAGE_GRAYSCALE)
+            img = cv2.imread(data_folder + folder_opt + str(i) + '.jpg', 0)
             height, width, channels = img.shape
             crop_pos = int((width-height)/2)
             img = img[:,crop_pos:crop_pos+height,:]
