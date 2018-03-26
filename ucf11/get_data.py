@@ -79,7 +79,7 @@ def stackOpticalFlow(chunk,data_folder,train):
             print img.shape
             height, width = img.shape
             crop_pos = int((width-height)/2)
-            img = img[:,crop_pos:crop_pos+height,:]
+            img = img[:,crop_pos:crop_pos+height]
             resize_img = cv2.resize(img, (224, 224))
             arrays.append(resize_img)
 
