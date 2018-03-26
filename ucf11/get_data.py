@@ -87,7 +87,7 @@ def stackOpticalFlow(chunk,data_folder,train):
         nstack = stack[ay:ay+224,ax:ax+224,:]
         nstack = nstack.astype('float16',copy=False)
         nstack/=255
-        # print nstack.shape
+        print nstack.shape
         stack_opt.append(nstack)
 
     return (np.array(stack_opt), labels)
