@@ -26,6 +26,7 @@ def getTrainData(keys,batch_size,classes,mode,train):
         data = True
     else: 
         data = False
+    print train
     if server:
         data_folder = r'/home/oanhnt/thainh/data/opt1/{}/'.format(train)
         data_folder_rgb = r'/home/oanhnt/thainh/data/rgb/{}/'.format(train)
@@ -67,8 +68,6 @@ def stackOpticalFlow(chunk,data_folder,train):
 
         for i in range(start_opt, start_opt + 20):
             img=Image.open(data_folder + folder_opt + str(i) + '.jpg')
-            path = data_folder + folder_opt + str(i) + '.jpg'
-            print path
             arrays.append(img)
 
         stack = np.dstack(arrays)
