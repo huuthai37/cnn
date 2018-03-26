@@ -40,16 +40,22 @@ def getTrainData(keys,batch_size,classes,mode,train):
         for i in range(0, len(keys), batch_size):
             if mode == 1:
                 X_train,Y_train=stackRGB(keys[i:i+batch_size],data_folder_rgb)
+                print('Mode', mode)
             elif mode == 2:
                 X_train,Y_train=stackOpticalFlow(keys[i:i+batch_size],data_folder,data)
+                print('Mode', mode)
             elif mode == 3:
                 X_train,Y_train=stackOpticalFlow(keys[i:i+batch_size],data_folder_opt2,data)
+                print('Mode', mode)
             elif mode == 4:
                 X_train,Y_train=stackOpticalFlowRGB(keys[i:i+batch_size],data_folder,data_folder_rgb,data)
+                print('Mode', mode)
             elif mode == 5:
                 X_train,Y_train=stackSparseOpticalFlowRGB(keys[i:i+batch_size],data_folder_opt2,data_folder_rgb,data)
+                print('Mode', mode)
             else:
                 X_train,Y_train=stackThreeStream(keys[i:i+batch_size],data_folder,data_folder_rgb,data_folder_opt2,data)
+                print('Mode', mode)
 
             Y_train=np_utils.to_categorical(Y_train,classes)
             if not data:
