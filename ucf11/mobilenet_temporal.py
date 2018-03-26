@@ -123,8 +123,8 @@ if train:
                 max_queue_size=2, 
                 steps_per_epoch=len_samples/batch_size, 
                 epochs=1,
-#                 validation_data=gd.getTrainData(keys_valid,batch_size,classes,(1+opt_size),'valid'),
-#                 validation_steps=len_valid/batch_size
+                validation_data=gd.getTrainData(keys_valid,batch_size,classes,(1+opt_size),'valid'),
+                validation_steps=len_valid/batch_size
             )
             histories.append([
                 history.history['acc'],
