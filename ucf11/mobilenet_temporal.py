@@ -49,11 +49,13 @@ else:
 if train & (not retrain):
     model = keras.applications.mobilenet.MobileNet(
         include_top=True,  
-        weights='imagenet'
+        weights='imagenet',
+        dropout=0.5
     )
 else:
     model = keras.applications.mobilenet.MobileNet(
         include_top=True,  
+        dropout=0.5
     )
 
 # Disassemble layers
