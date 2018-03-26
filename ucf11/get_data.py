@@ -73,18 +73,24 @@ def stackOpticalFlow(chunk,data_folder,train):
         arrays = []
         # print(opt[0], opt[1])
 
+        size = 224, 224
         for i in range(start_opt, start_opt + 20):
             img=Image.open(data_folder + folder_opt + str(i) + '.jpg')
+            height, width, channels = img.shape
+            crop_pos = int((width-height)/2)
+            img = img[:,crop_pos:crop_pos+height,:]
+            img.thumbnail(size,Image.ANTIALIAS)
             arrays.append(img)
 
-        stack = np.dstack(arrays)
-        if train:
-            ax = random.randint(0,96)
-            ay = random.randint(0,16)
-        else:
-            ax = 48
-            ay = 8
-        nstack = stack[ay:ay+224,ax:ax+224,:]
+        # stack = np.dstack(arrays)
+        # if train:
+        #     ax = random.randint(0,96)
+        #     ay = random.randint(0,16)
+        # else:
+        #     ax = 48
+        #     ay = 8
+        # nstack = stack[ay:ay+224,ax:ax+224,:]
+        nstack = np.dstack(arrays)
         nstack = nstack.astype('float16',copy=False)
         nstack/=255
         print nstack.shape
