@@ -158,7 +158,7 @@ if train:
                 history.history['acc'],
                 history.history['loss']
             ])
-        result_model.save_weights('weights/mobilenet_twostream1_{}_{}e.h5'.format(opt_size,old_epochs+1+e))
+        result_model.save_weights('weights/mobilenet_twostream1_{}e.h5'.format(old_epochs+1+e))
     print histories
     with open('data/trainHistoryTwoStream{}_{}_{}e'.format(1, old_epochs, epochs), 'wb') as file_pi:
         pickle.dump(histories, file_pi)
@@ -174,6 +174,6 @@ else:
     print('-'*40)
     print 'Number samples: {}'.format(len_samples)
 
-    score = result_model.evaluate_generator(gd.getTrainData(keys,batch_size,classes,4,train), max_queue_size=3, steps=len_samples/batch_size)
+    score = result_model.evaluate_generator(gd.getTrainData(keys,batch_size,classes,4,'test'), max_queue_size=3, steps=len_samples/batch_size)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
