@@ -26,6 +26,7 @@ else:
     train = False
     retrain = False
 
+opt_size = 1
 batch_size = int(sys.argv[2])
 epochs = int(sys.argv[3])
 classes = int(sys.argv[4])
