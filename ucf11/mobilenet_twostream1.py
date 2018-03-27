@@ -49,6 +49,7 @@ else:
 # two_stream
 model = keras.applications.mobilenet.MobileNet(
     include_top=True,
+    dropout=0.5
 )
 
 # Disassemble layers
@@ -67,8 +68,10 @@ for i in range(3, len(layers)-3):
     layers[i].name = str(i)
     x = layers[i](x)
 
-x = Flatten()(x)
-x = Dense(classes, activation='softmax', name='predictions_x')(x)
+x = Conv2D(classes, (1, 1),
+                   padding='same', name='conv_predsx')(x)
+x = Activation('softmax', name='act_softmaxx')(x)
+x = Reshape((classes,), name='reshape_2x')(x)
 temporal_model = Model(inputs=input_opt, outputs=x)
 if train & (not retrain):
     temporal_model.load_weights('weights/mobilenet_temporal1_{}e.h5'.format(tem_epochs))
@@ -76,10 +79,14 @@ if train & (not retrain):
 # Spatial
 model2 = keras.applications.mobilenet.MobileNet(
     include_top=True,
-    input_shape=(224,224,3)
+    input_shape=(224,224,3),
+    dropout=0.5
 )
-y = Flatten()(model2.layers[-4].output)
-y = Dense(classes, activation='softmax', name='predictions_y')(y)
+
+y = Conv2D(classes, (1, 1),
+                   padding='same', name='conv_predsy')(model2.layers[-4].output)
+y = Activation('softmax', name='act_softmaxy')(y)
+y = Reshape((classes,), name='reshape_2y')(y)
 spatial_model = Model(inputs=model2.input, outputs=y)
 if train & (not retrain):
     spatial_model.load_weights('weights/mobilenet_spatial_{}e.h5'.format(spa_epochs))
