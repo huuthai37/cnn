@@ -141,8 +141,13 @@ def stackOpticalFlowRGB(chunk,data_folder,data_folder_rgb,train):
         resize_rgb/=255
         # Stack optical flow
         for i in range(start_opt, start_opt + 20):
-            img=Image.open(data_folder + folder_opt + '/' + str(i) + '.jpg')
-            arrays.append(img)
+            img = cv2.imread(data_folder + folder_opt + str(i) + '.jpg', 0)
+#             print img.shape
+            height, width = img.shape
+            crop_pos = int((width-height)/2)
+            img = img[:,crop_pos:crop_pos+height]
+            resize_img = cv2.resize(img, (224, 224))
+            arrays.append(resize_img)
 
         stack = np.dstack(arrays)
         if train:
@@ -181,8 +186,13 @@ def stackSparseOpticalFlowRGB(chunk,data_folder,data_folder_rgb,train):
         resize_rgb/=255
         # Stack optical flow
         for i in range(start_opt, start_opt + 20):
-            img=Image.open(data_folder + folder_opt + '/' + str(i) + '.jpg')
-            arrays.append(img)
+            img = cv2.imread(data_folder + folder_opt + str(i) + '.jpg', 0)
+#             print img.shape
+            height, width = img.shape
+            crop_pos = int((width-height)/2)
+            img = img[:,crop_pos:crop_pos+height]
+            resize_img = cv2.resize(img, (224, 224))
+            arrays.append(resize_img)
 
         stack = np.dstack(arrays)
         if train:
