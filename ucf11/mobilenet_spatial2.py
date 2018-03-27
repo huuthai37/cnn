@@ -9,9 +9,9 @@ import pickle
 import random
 import config
 
-# train: python mobilenet_spatial.py train 32 1 101
-# test: python mobilenet_spatial.py test 32 1 101
-# retrain: python mobilenet_spatial.py retrain 32 1 101 1
+# train: python mobilenet_spatial2.py train 32 1 101
+# test: python mobilenet_spatial2.py test 32 1 101
+# retrain: python mobilenet_spatial2.py retrain 32 1 101 1
 class PlotLearning(Callback):
     def on_train_begin(self, logs={}):
         # self.i = 0
@@ -99,13 +99,13 @@ result_model.compile(loss='categorical_crossentropy',
 
 if train:
     if retrain:
-        result_model.load_weights('weights/mobilenet_spatial_{}e.h5'.format(old_epochs))
+        result_model.load_weights('weights/mobilenet_spatial2_{}e.h5'.format(old_epochs))
 
     
     print('-'*40)
     print('MobileNet RGB stream only: Training')
     print('-'*40)
-    check_point = ModelCheckpoint('weights/mobilenet_spatial_{epoch}e.h5', verbose=1, save_weights_only=True)
+    check_point = ModelCheckpoint('weights/mobilenet_spatial2_{epoch}e.h5', verbose=1, save_weights_only=True)
     result_model.fit_generator(
         train_batches, 
         verbose=1, 
@@ -117,7 +117,7 @@ if train:
         validation_steps=len_valid/batch_size)
 
 else:
-    result_model.load_weights('weights/mobilenet_spatial_{}e.h5'.format(epochs))
+    result_model.load_weights('weights/mobilenet_spatial2_{}e.h5'.format(epochs))
 
     print('-'*40)
     print('MobileNet RGB stream only: Testing')
