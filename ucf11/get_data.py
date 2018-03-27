@@ -149,14 +149,7 @@ def stackOpticalFlowRGB(chunk,data_folder,data_folder_rgb,train):
             resize_img = cv2.resize(img, (224, 224))
             arrays.append(resize_img)
 
-        stack = np.dstack(arrays)
-        if train:
-            ax = random.randint(0,96)
-            ay = random.randint(0,16)
-        else:
-            ax = 48
-            ay = 8
-        nstack = stack[ay:ay+224,ax:ax+224,:]
+        nstack = np.dstack(arrays)
         nstack = nstack.astype('float16',copy=False)
         nstack/=255
         # print nstack.shape
@@ -194,14 +187,7 @@ def stackSparseOpticalFlowRGB(chunk,data_folder,data_folder_rgb,train):
             resize_img = cv2.resize(img, (224, 224))
             arrays.append(resize_img)
 
-        stack = np.dstack(arrays)
-        if train:
-            ax = random.randint(0,96)
-            ay = random.randint(0,16)
-        else:
-            ax = 48
-            ay = 8
-        nstack = stack[ay:ay+224,ax:ax+224,:]
+        nstack = np.dstack(arrays)
         nstack = nstack.astype('float16',copy=False)
         nstack/=255
         # print nstack.shape
