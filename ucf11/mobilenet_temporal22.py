@@ -74,7 +74,7 @@ x = Conv2D(filters=32,
 for i in range(3, len(layers)-3):
     x = layers[i](x)
 
-x = Flatten()(model.layers[-4].output)
+x = Flatten()(x)
 x = Dense(classes, activation='softmax', name='predictions')(x)
 
 # Final touch
