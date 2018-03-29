@@ -82,7 +82,7 @@ model2 = keras.applications.mobilenet.MobileNet(
     dropout=0.5
 )
 
-y = Flatten()(model.layers[-4].output)
+y = Flatten()(model2.layers[-4].output)
 y = Dense(classes, activation='softmax')(y)
 spatial_model = Model(inputs=model2.input, outputs=y)
 if train & (not retrain):
