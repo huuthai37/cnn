@@ -12,16 +12,14 @@ import config
 classes = 11
 
 
-model = keras.applications.mobilenet.MobileNet(
+model = keras.applications.mobilenet.NASNetMobile(
     include_top=True,  
-    weights='imagenet',
-    dropout=0.5
+    weights='imagenet'
 )
 
 
 # Modify network some last layer
-x = Flatten()(model.layers[-4].output)
-x = Dense(classes, activation='softmax', name='predictions')(x)
+x = Dense(classes, activation='softmax', name='predictions')(model.layers[-2].output)
 
 #Then create the corresponding model 
 result_model = Model(inputs=model.input, outputs=x)
