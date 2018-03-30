@@ -12,7 +12,7 @@ import config
 classes = 11
 
 
-model = keras.applications.mobilenet.NASNetMobile(
+model = keras.applications.nasnet.NASNetMobile(
     include_top=True,  
     weights='imagenet'
 )
